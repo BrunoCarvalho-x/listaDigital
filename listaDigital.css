@@ -1,0 +1,145 @@
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .conteudo {
+    max-width: 450px;
+    margin: 50px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 1);
+  
+  }
+  
+  h1 {
+    text-align: center;
+  }
+  
+  ul {
+    padding: auto;
+  }
+  
+  .entrada1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .entradaLista {
+    width: 250px;
+  }
+  
+  input {
+    padding: 5px;
+    margin-right: 10px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  button {
+    cursor: pointer;
+    border-radius: 5px;
+    border: none;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 12px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 1);
+    background-color: #4caf50;
+    color: #FFF;
+  }
+  
+  ai {
+    margin-bottom: 5px;
+    margin-left: -20px;
+    margin-right: 20px;
+    padding: 5px;
+    display: flex;
+    border: 1px solid #ddd;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  span {
+    flex-grow: 1;
+  }
+  
+  button.deletarLista {
+    margin-right: 8px;
+    background-color: #f44336;
+  }
+  
+  button.editarLista {
+    margin-right: 12px;
+    background-color: #2196f3;
+  }
+  
+  button.asListas {
+    margin-left: 8px;
+    background-color: #8bc34a;
+  }
+
+  .quantidade {
+    width: 100px;
+  }
+  
+  input.item {
+    padding: 5px;
+    margin-right: 10px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+  }
+
+  input.quantidade {
+    padding: 5px;
+    margin-right: 10px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  button.deletar {
+    margin-right: 8px;
+    background-color: #f44336;
+  }
+  
+  button.editar {
+    margin-right: 12px;
+    background-color: #2196f3;
+  }
+  
+  button.completo {
+    margin-right: 12px;
+    background-color: #8bc34a;
+  }
+
+  .completed {
+    text-decoration: line-through;
+    text-decoration-thickness: 3px;
+
+  }
+
+  li {
+    margin-bottom: 5px;
+    margin-left: -40px;
+    padding: 5px;
+    display: flex;
+    border: 1px solid #ddd;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .entrada2 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  button.add {
+    margin-right: 5px;
+  }
