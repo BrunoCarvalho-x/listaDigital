@@ -10,11 +10,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const botaoAdicionar = [];
     const TESTE = {
         div: [],
-        link: [],
     };
     let auxFuncao = 0;
 
-    function adicionarLista(event) {
+    function adicionarLista(event) { // função que adiciona a lista criada
         if (event.target.classList.contains("addLista")) { // Verifica se o Click contem o classe de addLista 
             nomeLista[auxFuncao]=listaEntrada.value.trim(); // Associa um nomeLista a função atual, adicionando um indice a ela
             if (nomeLista[auxFuncao] !== "") { // Verifica o caso da string ser vazia
@@ -37,72 +36,74 @@ document.addEventListener("DOMContentLoaded", function () {
             }
             auxFuncao++; // Adicionar +1 para que o próximo uso da função não chame os mesmo locais da memória.
         };
-    }; // Funcionando ...
+    };
 
-    function deletarLista(event) { // funçãoo que deleta a lista clicada
+    function deletarLista(event) { // função que deleta a lista
         if (event.target.classList.contains("deletarLista")) { // Verifica a classe do botão que foi clicado
-            let indice = event.target.dataset.index; // Vincula a variavel criada ao indice da função clicada acima
-            listasEmBloco[indice].remove(); // remove os botões criados da função adicionarLista()
-            if (TESTE.div[indice] != '') { // Verifica se  
-                (TESTE.div[indice]).remove();
-                (TESTE.script[indice]).remove();
+            const indice = event.target.dataset.index; // Vincula a variavel criada ao indice da função clicada acima
+            if (TESTE.div[indice]) { // Verifica a div não está vazia 
+                TESTE.div[indice].remove(); // remove o que está na div
             };
+            listasEmBloco[indice].remove(); // remove os botões criados da função adicionarLista()
         };
-    }; // Funcionando ...
+    };
 
-    function editarLista(event) {
+    function editarLista(event) { // função de editar o nome da lista
 
-        if (event.target.classList.contains("editarLista")){
-            let indice = event.target.dataset.index;           
-            listasEmBloco[indice].querySelector("span").style.display = "none";
+        if (event.target.classList.contains("editarLista")){ // verifica a classe do botão clicado
+            let indice = event.target.dataset.index; // vincula o indice do botão
+            listasEmBloco[indice].querySelector("span").style.display = "none"; // Tira ele da tela
 
-            let novoNomeListaEntrada = document.createElement("input");
-            novoNomeListaEntrada.type = "text";
-            novoNomeListaEntrada.value = nomeLista[indice];          
-            novoNomeListaEntrada.style.width = "120px"; 
-            listasEmBloco[indice].insertBefore(novoNomeListaEntrada, botaoEditarLista[indice]);
-            botaoEditarLista[indice].style.display = "none";
+            let novoNomeListaEntrada = document.createElement("input"); // Cria um input novo que será usado para trocar o nome
+            novoNomeListaEntrada.type = "text"; // Tipo do elemento
+            novoNomeListaEntrada.value = nomeLista[indice]; // recebe o valor original para que poossa ser trocado posteriormente       
+            novoNomeListaEntrada.style.width = "120px"; // Estilo css do elemento
+            listasEmBloco[indice].insertBefore(novoNomeListaEntrada, botaoEditarLista[indice]); 
+            /* incere na tela, na ordem: 
+            novoNomeListaEntrada - botaoEditarLista - botaoExcluir
+            */
+            botaoEditarLista[indice].style.display = "none"; // vetira o botão editar da tela pra não ocasionar erro
 
-            let botaoSalvarLista = document.createElement("button");
+            let botaoSalvarLista = document.createElement("button"); // cria o botão salvar
             botaoSalvarLista.textContent = "Salvar";
-            listasEmBloco[indice].insertBefore(botaoSalvarLista, botaoDeletarLista[indice]);
+            listasEmBloco[indice].insertBefore(botaoSalvarLista, botaoDeletarLista[indice]); // Mesma lógica acima
             novoNomeListaEntrada.focus();
 
-            function SalvarLista() {
-                let nomeListaTroca = novoNomeListaEntrada.value.trim();
+            function SalvarLista() { // função do botão salvar
+                let nomeListaTroca = novoNomeListaEntrada.value.trim(); // cria a variavel usada pra trocar o nome e não causar erro
 
-                if (nomeListaTroca !== "") {
-                    listasEmBloco[indice].querySelector("span button").textContent = `${nomeListaTroca}`;
-                    listasEmBloco[indice].querySelector("span").style.display = "inline";
-                    botaoEditarLista[indice].style.display = "inline";
+                if (nomeListaTroca !== "") { // verifica nome não vazio
+                    listasEmBloco[indice].querySelector("span button").textContent = `${nomeListaTroca}`; // faz a troca no texto html
+                    listasEmBloco[indice].querySelector("span").style.display = "inline"; // reaparece na tela o que foi retirado
+                    botaoEditarLista[indice].style.display = "inline"; // idem 
                     nomeLista[indice] = nomeListaTroca;
                     novoNomeListaEntrada.remove();	
                     botaoSalvarLista.remove();
                 }
-            }; // Funcionando ...
+            };
 
-            botaoSalvarLista.addEventListener("click", SalvarLista);
+            botaoSalvarLista.addEventListener("click", SalvarLista); // escutador da função 
             
-            botaoSalvarLista.addEventListener("keydown", function (event) {
+            botaoSalvarLista.addEventListener("keydown", function (event) { // função para tecla enter
                 if (event.key === "Enter") {
                     event.preventDefault();  
                     SalvarLista();
                 }  
-            }); // Funcionando ...   
+            });
 
-            novoNomeListaEntrada.addEventListener("keydown", function (event) {
+            novoNomeListaEntrada.addEventListener("keydown", function (event) { // função para tecla enter
                 if (event.key === "Enter") {
                     event.preventDefault();
                     botaoSalvarLista.focus();
                 }
-            }); // Funcionando ...
+            });
         };
-    }; // Funcionando ...
+    };
 
-    function botaoLista(event) {
-        let indice = event.target.dataset.index;
-        if (!TESTE.div[indice]) {
-            if (event.target.classList.contains("asListas")){
+    function botaoLista(event) { // função que acessa a lista criada
+        let indice = event.target.dataset.index; // vincula o indice a variavel
+        if (!TESTE.div[indice]) { // verifica a existencia não nula da div, se for nulo, cria uma nova
+            if (event.target.classList.contains("asListas")){ // verifica a classe 
                 
                 TESTE.div[indice] = document.createElement("div");
                 TESTE.div[indice].className = "conteudo";
@@ -117,47 +118,45 @@ document.addEventListener("DOMContentLoaded", function () {
                             </div>
                             <ul id="lista_${indice}"></ul>                              
                 `;
-                TESTE.script[indice] = document.createElement("script");
-                //TESTE.link[indice] = document.createElement("link");
-                //TESTE.link[indice].rel = "stylesheet";
-                //TESTE.link[indice].href = "listaCompras.css";
 
-                document.querySelector(".conteudo").style.display = "none";
+                // cria a nova div e a vincula com o indice trabalhado
+                
+                document.querySelector(".conteudo").style.display = "none"; // retira o conteudo do display para adicionar o nova div
 
-                document.body.appendChild(TESTE.div[indice]); 
-                document.body.appendChild(TESTE.script[indice]);
-                // document.head.appendChild(TESTE.link[indice]);  
+                document.body.appendChild(TESTE.div[indice]); // adiciona a div
 
-                botaoAdicionar[indice] = document.getElementById(`add_${indice}`);
+                botaoAdicionar[indice] = document.getElementById(`add_${indice}`); // vincula o botao ao novo indice criado
                 botaoAdicionar[indice].dataset.index = indice;
             };
-        } else if(event.target.classList.contains("asListas")) {
+        } else if(event.target.classList.contains("asListas")) { // caso não for nula é porque já foi criado, logo só acessa a já existente
             let h1 = document.getElementById(`h1_${indice}`);
 
             if (nomeLista[indice] !== h1.textContent) {
                 h1.textContent = nomeLista[indice];
             };
 
+            // passagem para mudança do nome da lista caso tenha acontecido.
+
             document.querySelector(".conteudo").style.display = "none";
             TESTE.div[indice].style.display = "block";
         };
 
     
-    }; // Funcionando ...
+    };
 
     function adicionarItem(event) {
-        if (event.target.classList.contains("add")){
-            const indice = event.target.dataset.index;
+        if (event.target.classList.contains("add")){ // verifica a classe clicada
+            const indice = event.target.dataset.index; // vincula o indice
 
-            const itemEntrada = document.getElementById(`item_${indice}`);
-            const quantEntrada = document.getElementById(`quantidade_${indice}`);
-            const listaCompleta = document.getElementById(`lista_${indice}`);
-            botaoAdicionar[indice] = document.getElementById(`add_${indice}`);
+            const itemEntrada = document.getElementById(`item_${indice}`); // vincula a variavel
+            const quantEntrada = document.getElementById(`quantidade_${indice}`); // vincula a variavel
+            const listaCompleta = document.getElementById(`lista_${indice}`); // vincula a variavel
+            botaoAdicionar[indice] = document.getElementById(`add_${indice}`); // vincula a variavel
 
-            let itemNome = itemEntrada.value.trim();
-            let itemQuantidade = quantEntrada.value.trim();
+            let itemNome = itemEntrada.value.trim(); // recebe o nome digitado do item
+            let itemQuantidade = quantEntrada.value.trim(); // recebe a quantidade digitada do item
 
-            if (itemNome !== "" && itemQuantidade !== "") { // required (??)
+            if (itemNome !== "" && itemQuantidade !== "") {
                 const listaBloco = document.createElement("li");
                 listaBloco.innerHTML = `
                     <span> ${itemQuantidade} - ${itemNome} </span>
@@ -168,12 +167,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 listaCompleta.appendChild(listaBloco);
                 itemEntrada.value = "";
                 quantEntrada.value = "";
-            
+                // segue a mesma lógica das funções anteriores de criação de botões e html
+
                 const botaoCompletar = listaBloco.querySelector(".completo");
                 const botaoEditar = listaBloco.querySelector(".editar");
                 const botaoDeletar = listaBloco.querySelector(".deletar");
             
-                botaoCompletar.addEventListener("click", function () {
+                botaoCompletar.addEventListener("click", function () { // "risca" o item da lista
                     const textoElementos = listaBloco.querySelectorAll("span");
                     textoElementos.forEach(function (element) {
                     element.classList.toggle("completed");
@@ -230,28 +230,28 @@ document.addEventListener("DOMContentLoaded", function () {
         };
     }; // Funcionando ...
 
-    function voltar (event) {
-        if (event.target.id.includes("voltar")){
-            const indice = event.target.dataset.index;
-            TESTE.div[indice].style.display = "none";
-            document.querySelector(".conteudo").style.display = "block";
+    function voltar (event) { // Volta para a parte com várias listas
+        if (event.target.id.includes("voltar")){ // verifica o id voltar no evento de clicar
+            const indice = event.target.dataset.index; // vincula o indice
+            TESTE.div[indice].style.display = "none"; // retira o html associado a esse indice da tela
+            document.querySelector(".conteudo").style.display = "block"; // Volta o html anterior.
         };
-    }; // Funcionando ...
+    };
 
-    listaEntrada.addEventListener("keydown", function (event) {
+    listaEntrada.addEventListener("keydown", function (event) { // função para tecla enter
         if (event.key === "Enter") {
             event.preventDefault();
             botaoAdicionarLista.focus();
         }
-    }); // Funcionando ...
+    });
 
-    botaoAdicionarLista.addEventListener("keydown", function (event) {  
+    botaoAdicionarLista.addEventListener("keydown", function (event) { // função para tecla enter
         if (event.key === "Enter") {
             event.preventDefault();
             adicionarLista(event);
             listaEntrada.focus();
         };
-    }); // Funcionando ...
+    });
 
     document.addEventListener("click", adicionarLista);
 
